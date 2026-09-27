@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b7a55">
+<title>Badminton Kuy — Mabar Random Badminton</title>
+<style>
+:root{--green:#0b7a55;--green2:#11a36f;--lime:#c9f36b;--ink:#10251e;--muted:#66756f;--bg:#f4f8f5;--card:#fff;--line:#dfe9e3;--red:#d94b4b;--shadow:0 12px 30px rgba(16,37,30,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit}button{border:0;cursor:pointer}.app{min-height:100vh}.nav{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100vw - 1120px)/2))}
+.logo{font-weight:900;font-size:21px;letter-spacing:-.6px}.logo span{color:var(--green)}.nav small{color:var(--muted)}
+.wrap{max-width:1120px;margin:auto;padding:28px 18px 60px}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:stretch}.heroCard{background:linear-gradient(135deg,#083f2e,#0b7a55);color:white;border-radius:28px;padding:38px;box-shadow:var(--shadow);position:relative;overflow:hidden}.heroCard:after{content:"🏸";position:absolute;right:-12px;bottom:-35px;font-size:180px;opacity:.11;transform:rotate(-18deg)}h1{font-size:clamp(36px,6vw,64px);line-height:.95;margin:0 0 18px;letter-spacing:-3px}.hero p{font-size:17px;line-height:1.6;max-width:620px;color:#dcefe7}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.btn{padding:13px 17px;border-radius:13px;font-weight:800}.primary{background:var(--lime);color:#153b2d}.secondary{background:#fff;color:var(--green)}.ghost{background:#eaf4ef;color:var(--green)}.danger{background:#fff0f0;color:var(--red)}.heroSide{background:#fff;border:1px solid var(--line);border-radius:28px;padding:25px;box-shadow:var(--shadow)}.heroSide h3{margin-top:0}.steps{display:grid;gap:14px}.step{display:flex;gap:12px;align-items:flex-start}.num{width:31px;height:31px;border-radius:50%;background:#e4f5ed;color:var(--green);display:grid;place-items:center;font-weight:900;flex:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}.card h3{margin:0 0 7px}.muted{color:var(--muted)}.modal{position:fixed;inset:0;background:rgba(6,20,15,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal.show{display:flex}.dialog{background:#fff;width:min(520px,100%);border-radius:24px;padding:24px;box-shadow:0 25px 70px rgba(0,0,0,.22)}.dialog h2{margin-top:0}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:13px;font-weight:800}.field input,.field select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;outline:none}.field input:focus{border-color:var(--green)}.modalActions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
+.appView{display:none}.appView.active{display:block}.topbar{background:#fff;border-bottom:1px solid var(--line);padding:14px max(18px,calc((100vw - 1120px)/2));display:flex;justify-content:space-between;align-items:center;gap:10px}.code{font-weight:900;letter-spacing:2px;background:#eaf4ef;color:var(--green);padding:8px 11px;border-radius:10px}.tabs{display:flex;gap:8px;overflow:auto;padding:14px 0}.tab{background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:11px;font-weight:800;white-space:nowrap}.tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+.sessionGrid{display:grid;grid-template-columns:1fr 360px;gap:18px}.players{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.player{display:flex;justify-content:space-between;align-items:center;background:#f7faf8;border:1px solid var(--line);padding:11px 13px;border-radius:13px}.pill{font-size:11px;font-weight:800;background:#e5f3ed;color:var(--green);padding:5px 8px;border-radius:99px}
+.match{border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:12px;background:#fff}.matchHead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:800}.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:15px 0}.team{padding:13px;border-radius:14px;background:#f5f8f6}.team strong{display:block;margin-bottom:5px}.score{font-size:28px;font-weight:950}.vs{font-weight:900;color:var(--muted)}.scoreBtns{display:flex;gap:8px}.scoreBtns button{flex:1}.empty{padding:35px;text-align:center;color:var(--muted);border:1px dashed #cbd9d2;border-radius:16px}
+.board{display:grid;grid-template-columns:1fr auto auto auto;gap:0}.row{display:contents}.cell{padding:11px 8px;border-bottom:1px solid var(--line);font-size:13px}.head .cell{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:900}.rank{font-weight:950;color:var(--green)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);opacity:0;background:#10251e;color:#fff;padding:12px 16px;border-radius:12px;transition:.2s;z-index:30}.toast.show{opacity:1;transform:translateX(-50%)}
+@media(max-width:800px){.hero,.sessionGrid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.heroCard{padding:28px}.players{grid-template-columns:1fr}.nav{height:60px}.wrap{padding-top:18px}.sessionGrid aside{order:-1}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="home">
+    <nav class="nav"><div class="logo">🏸 Badminton <span>Kuy</span></div><small>Mabar random, gak ribet.</small></nav>
+    <main class="wrap">
+      <section class="hero">
+        <div class="heroCard">
+          <div style="font-weight:800;opacity:.85">BADMINTON KUY</div>
+          <h1>Datang.<br>Join.<br>Gas Mabar.</h1>
+          <p>Temukan format main badminton yang seru: masuk pakai kode, kumpulkan pemain, lalu biarkan sistem mengacak pasangan dan rotasi supaya semua kebagian main.</p>
+          <div class="actions"><button class="btn primary" onclick="openCreate()">＋ Buat Sesi</button><button class="btn secondary" onclick="openJoin()">Gabung Sesi</button></div>
+        </div>
+        <div class="heroSide">
+          <h3>⚡ Cara main</h3>
+          <div class="steps">
+            <div class="step"><div class="num">1</div><div><b>Host bikin sesi</b><br><span class="muted">Atur nama, jumlah lapangan, dan target game.</span></div></div>
+            <div class="step"><div class="num">2</div><div><b>Share kode</b><br><span class="muted">Teman masuk cukup dengan nama + kode sesi.</span></div></div>
+            <div class="step"><div class="num">3</div><div><b>Random & rotasi</b><br><span class="muted">Klik “Kuy Random!” untuk susun match berikutnya.</span></div></div>
+            <div class="step"><div class="num">4</div><div><b>Catat skor</b><br><span class="muted">Leaderboard otomatis ikut berubah.</span></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="grid">
+        <div class="card"><h3>🎲 Random Fair</h3><p class="muted">Prioritaskan pemain yang lebih sedikit bermain dan kurangi pengulangan pasangan.</p></div>
+        <div class="card"><h3>🏟️ Multi Court</h3><p class="muted">Cocok untuk mabar beberapa lapangan sekaligus.</p></div>
+        <div class="card"><h3>📊 Statistik</h3><p class="muted">Menang, kalah, game dimainkan, dan win rate per sesi.</p></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="session" class="appView">
+    <div class="topbar">
+      <div><b>🏸 Badminton Kuy</b> <span class="code" id="sessionCode"></span></div>
+      <div style="display:flex;gap:8px"><button class="btn ghost" onclick="copyCode()">Salin Kode</button><button class="btn danger" onclick="leaveSession()">Keluar</button></div>
+    </div>
+    <main class="wrap">
+      <div class="tabs">
+        <button class="tab active" data-tab="play" onclick="showTab('play')">🎲 Mabar</button>
+        <button class="tab" data-tab="players" onclick="showTab('players')">👥 Pemain</button>
+        <button class="tab" data-tab="standings" onclick="showTab('standings')">🏆 Klasemen</button>
+      </div>
+      <div id="tab-play" class="sessionGrid">
+        <section>
+          <div class="card" style="margin-bottom:15px"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><div><h2 style="margin:0">Kuy Random!</h2><span class="muted" id="sessionMeta"></span></div><button class="btn primary" onclick="randomize()">🎲 Acak Match</button></div></div>
+          <div id="matches"></div>
+        </section>
+        <aside>
+          <div class="card"><h3>📌 Sesi</h3><p id="hostLine" class="muted"></p><hr style="border:0;border-top:1px solid var(--line)"><b>Tips</b><p class="muted">Sistem memprioritaskan pemain dengan jumlah game paling sedikit. Pasangan yang baru saja bermain akan dikurangi prioritasnya.</p></div>
+        </aside>
+      </div>
+      <div id="tab-players" style="display:none"><div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>👥 Pemain</h2><button class="btn primary" onclick="openAddPlayer()">＋ Tambah</button></div><div class="players" id="playersList"></div></div></div>
+      <div id="tab-standings" style="display:none"><div class="card"><h2>🏆 Klasemen Sesi</h2><div class="board" id="standings"></div></div></div>
+    </main>
+  </div>
+</div>
+
+<div class="modal" id="modal"><div class="dialog" id="dialog"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY='badminton-kuy-v1';
+let state=JSON.parse(localStorage.getItem(KEY)||'null');
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function code(){return Math.random().toString(36).slice(2,7).toUpperCase()}
+function openModal(html){document.getElementById('dialog').innerHTML=html;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function toast(s){let t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function openCreate(){openModal(`<h2>🏸 Buat Sesi Mabar</h2><div class="field"><label>NAMA SESI</label><input id="fName" value="Mabar Badminton Kuy"></div><div class="field"><label>NAMA HOST</label><input id="fHost" placeholder="Nama kamu"></div><div class="field"><label>JUMLAH LAPANGAN</label><select id="fCourts"><option>1</option><option>2</option><option>3</option><option>4</option></select></div><div class="field"><label>TARGET GAME / PEMAIN</label><select id="fGames"><option>3</option><option>4</option><option>5</option><option>6</option></select></div><div class="modalActions"><button class="btn ghost" onclick="closeModal()">Batal</button><button class="btn primary" onclick="createSession()">Buat & Mulai</button></div>`)}
+function createSession(){let name=fName.value.trim()||'Mabar Badminton Kuy',host=fHost.value.trim()||'Host';state={code:code(),name,host,courts:+fCourts.value,target:+fGames.value,players:[{id:crypto.randomUUID(),name:host,games:0,wins:0,losses:0,partners:{}}],matches:[],current:null};save();closeModal();enter()}
+function openJoin(){openModal(`<h2>🔗 Gabung Sesi</h2><div class="field"><label>KODE SESI</label><input id="jCode" maxlength="5" placeholder="ABCDE" style="text-transform:uppercase"></div><div class="field"><label>NAMA KAMU</label><input id="jName" placeholder="Nama panggilan"></div><div class="modalActions"><button class="btn ghost" onclick="closeModal()">Batal</button><button class="btn primary" onclick="joinSession()">Gabung</button></div><p class="muted" style="font-size:12px">Demo ini menyimpan sesi di browser/perangkat yang sama. Versi online berikutnya dapat memakai Supabase/Firebase agar kode bisa dipakai lintas HP.</p>`)}
+function joinSession(){if(!state||state.code!==jCode.value.trim().toUpperCase()){toast('Sesi tidak ditemukan di perangkat ini');return}let n=jName.value.trim();if(!n)return toast('Isi nama dulu');if(!state.players.some(p=>p.name.toLowerCase()===n.toLowerCase()))state.players.push({id:crypto.randomUUID(),name:n,games:0,wins:0,losses:0,partners:{}});save();closeModal();enter()}
+function enter(){document.getElementById('home').style.display='none';document.getElementById('session').classList.add('active');render()}
+function leaveSession(){document.getElementById('session').classList.remove('active');document.getElementById('home').style.display='block'}
+function copyCode(){navigator.clipboard?.writeText(state.code);toast('Kode disalin: '+state.code)}
+function showTab(tab){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));['play','players','standings'].forEach(x=>document.getElementById('tab-'+x).style.display=x===tab?'':'none')}
+function openAddPlayer(){openModal(`<h2>＋ Tambah Pemain</h2><div class="field"><label>NAMA</label><input id="pName" placeholder="Nama pemain"></div><div class="modalActions"><button class="btn ghost" onclick="closeModal()">Batal</button><button class="btn primary" onclick="addPlayer()">Tambah</button></div>`)}
+function addPlayer(){let n=pName.value.trim();if(!n)return;if(state.players.some(p=>p.name.toLowerCase()===n.toLowerCase()))return toast('Nama sudah ada');state.players.push({id:crypto.randomUUID(),name:n,games:0,wins:0,losses:0,partners:{}});save();closeModal();render()}
+function removePlayer(id){if(state.players.length<=4)return toast('Minimal 4 pemain');state.players=state.players.filter(p=>p.id!==id);save();render()}
+function randomize(){
+ if(state.players.length<4)return toast('Minimal 4 pemain untuk doubles');
+ let pool=[...state.players].sort((a,b)=>a.games-b.games||Math.random()-.5);
+ let slots=Math.min(state.courts,Math.floor(pool.length/4)), selected=pool.slice(0,slots*4);
+ // Shuffle selected with mild penalty for repeated partners
+ for(let i=selected.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[selected[i],selected[j]]=[selected[j],selected[i]]}
+ let matches=[];
+ for(let c=0;c<slots;c++){let q=selected.slice(c*4); let best=q; let bestScore=1e9;
+   for(let k=0;k<80;k++){let a=[...q].sort(()=>Math.random()-.5), score=0;
+     let prev=state.matches[state.matches.length-1];
+     for(let z=0;z<4;z+=2){let p=a[z],r=a[z+1];score+=(p.partners[r.id]||0)*8}
+     if(prev){let ids=prev.players||[];score+=a.filter(x=>ids.includes(x.id)).length*1.5}
+     if(score<bestScore){bestScore=score;best=a}
+   }
+   matches.push({id:crypto.randomUUID(),court:c+1,players:best.map(x=>x.id),score:[0,0],done:false});
+ }
+ state.current=matches;state.matches.push(...matches);save();render();toast('Match baru siap!')}
+function finishMatch(id,winner){let m=state.current.find(x=>x.id===id);if(!m||m.done)return;let a=m.players.slice(0,2),b=m.players.slice(2);m.done=true;m.winner=winner;
+ [...a,...b].forEach(id=>{let p=state.players.find(x=>x.id===id);p.games++;if((winner===0&&a.includes(id))||(winner===1&&b.includes(id)))p.wins++;else p.losses++});
+ a.forEach(x=>b.forEach(y=>{let p=state.players.find(z=>z.id===x);p.partners[y]=(p.partners[y]||0)+1;let q=state.players.find(z=>z.id===y);q.partners[x]=(q.partners[x]||0)+1}));
+ state.matches[state.matches.length-1-state.current.length+state.current.indexOf(m)]=m;save();render();toast('Hasil disimpan')}
+function render(){if(!state)return;sessionCode.textContent=state.code;sessionMeta.textContent=`${state.name} · ${state.courts} court · target ${state.target} game`;hostLine.textContent=`Host: ${state.host} · ${state.players.length} pemain`;renderPlayers();renderMatches();renderStandings()}
+function renderPlayers(){playersList.innerHTML=state.players.map(p=>`<div class="player"><div><b>${esc(p.name)}</b><div class="muted" style="font-size:12px">${p.games} game · ${p.wins} menang</div></div><button class="btn danger" style="padding:7px 9px" onclick="removePlayer('${p.id}')">×</button></div>`).join('')}
+function renderMatches(){let el=matches;if(!state.current||!state.current.length){el.innerHTML='<div class="empty">Belum ada match. Tekan <b>Kuy Random!</b> untuk mulai.</div>';return}
+el.innerHTML=state.current.map(m=>{let p=m.players.map(id=>state.players.find(x=>x.id===id));return `<div class="match"><div class="matchHead"><span>COURT ${m.court}</span><span>${m.done?'SELESAI':'SEDANG BERMAIN'}</span></div><div class="teams"><div class="team"><strong>${esc(p[0].name)} & ${esc(p[1].name)}</strong><span class="score">${m.done?(m.winner===0?'WIN':''):'—'}</span></div><div class="vs">VS</div><div class="team"><strong>${esc(p[2].name)} & ${esc(p[3].name)}</strong><span class="score">${m.done?(m.winner===1?'WIN':''):'—'}</span></div></div>${m.done?'<span class="pill">Hasil tersimpan</span>':`<div class="scoreBtns"><button class="btn ghost" onclick="finishMatch('${m.id}',0)">🏆 Tim Kiri Menang</button><button class="btn ghost" onclick="finishMatch('${m.id}',1)">🏆 Tim Kanan Menang</button></div>`}</div>`}).join('')}
+function renderStandings(){let ps=[...state.players].sort((a,b)=>b.wins-a.wins||b.games-a.games);standings.innerHTML=`<div class="row head"><div class="cell">Pemain</div><div class="cell">G</div><div class="cell">W</div><div class="cell">WR</div></div>`+ps.map((p,i)=>`<div class="row"><div class="cell"><span class="rank">${i+1}</span> &nbsp;<b>${esc(p.name)}</b></div><div class="cell">${p.games}</div><div class="cell">${p.wins}</div><div class="cell">${p.games?Math.round(p.wins/p.games*100):0}%</div></div>`).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+</script>
+</body></html>
