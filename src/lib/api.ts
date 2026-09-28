@@ -58,19 +58,16 @@ export async function login(email: string, password: string) {
   try {
     const validated = validateLoginInput({ email, password });
     
-    console.log("[LOGIN_TRACE] auth_request_started");
     const { data, error } = await supabase.auth.signInWithPassword({
       email: validated.email,
       password: validated.password,
     });
 
     if (error) {
-      console.log("[LOGIN_TRACE] auth_request_failed");
       logger.error("login failed", { email, error: error.message });
       throw new AppError("Email atau kata sandi salah", "AUTH_ERROR", 401);
     }
 
-    console.log("[LOGIN_TRACE] auth_request_succeeded");
     logger.info("login success", { email });
     return data;
   } catch (error) {
