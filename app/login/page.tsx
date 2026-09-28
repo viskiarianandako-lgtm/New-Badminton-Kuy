@@ -19,17 +19,23 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
+    console.log("[LOGIN_FLOW] submit handler entered");
     e.preventDefault();
+    console.log("[LOGIN_FLOW] preventDefault completed");
     if (!email.trim() || !password) {
       toast.show("Isi email dan kata sandi", "error");
       return;
     }
     setLoading(true);
     try {
+      console.log("[LOGIN_FLOW] calling login()");
       await login(email.trim(), password);
+      console.log("[LOGIN_FLOW] login returned successfully");
       toast.show("Berhasil masuk", "success");
+      console.log("[LOGIN_FLOW] redirecting to my-sessions");
       router.push("/my-sessions");
     } catch (e) {
+      console.log("[LOGIN_FLOW] login failed");
       toast.show(e instanceof Error ? e.message : "Gagal masuk", "error");
     } finally {
       setLoading(false);
