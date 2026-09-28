@@ -34,13 +34,29 @@ export default function SessionPage() {
   const [showQr, setShowQr] = useState(false);
 
   const fetchData = useCallback(async () => {
+    // Helper: fetch with timeout
+    const fetchWithTimeout = async <T,>(promise: Promise<T>, timeoutMs = 10000): Promise<T> => {
+      const timeoutPromise = new Promise<T>((_, reject) =>
+        setTimeout(() => reject(new Error("Request timeout")), timeoutMs)
+      );
+      return Promise.race([promise, timeoutPromise]);
+    };
+
     try {
-      const [s, p, m] = await Promise.all([
-        getSessionByCode(code),
-        listPlayers(code),
-        listMatches(code),
+      // Fetch session with timeout - this is the critical data
+      let s: Session | null = null;
+      try {
+        s = await fetchWithTimeout(getSessionByCode(code));
+        setSession(s);
+      } catch (sessionError) {
+        setSession(null);
+      }
+
+      // Fetch players and matches in parallel with individual timeouts
+      const [p, m] = await Promise.all([
+        fetchWithTimeout(listPlayers(code)).catch(() => [] as Player[]),
+        fetchWithTimeout(listMatches(code)).catch(() => [] as Match[]),
       ]);
-      setSession(s);
       setPlayers(p);
       setMatches(m);
     } catch (e) {
