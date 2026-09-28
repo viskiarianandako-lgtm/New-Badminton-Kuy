@@ -20,16 +20,21 @@ export default function LoginPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("[LOGIN_TRACE] submit_started");
     if (!email.trim() || !password) {
       toast.show("Isi email dan kata sandi", "error");
       return;
     }
     setLoading(true);
     try {
+      console.log("[LOGIN_TRACE] calling_login");
       await login(email.trim(), password);
+      console.log("[LOGIN_TRACE] login_resolved");
       toast.show("Berhasil masuk", "success");
+      console.log("[LOGIN_TRACE] redirect_started");
       router.push("/my-sessions");
     } catch (e) {
+      console.log("[LOGIN_TRACE] submit_failed");
       toast.show(e instanceof Error ? e.message : "Gagal masuk", "error");
     } finally {
       setLoading(false);
